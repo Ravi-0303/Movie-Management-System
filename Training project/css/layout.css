@@ -1,0 +1,12 @@
+.container { width: min(1180px, 92%); margin: auto; }
+.details-page { padding: 40px 0; }
+
+@media (max-width: 800px) {
+  .toolbar { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 29px; }
+  .hero-icon { display: none; }
+  .detail-card { grid-template-columns: 1fr; }
+  .detail-poster { max-width: 360px; margin: auto; }
+  .detail-content h1 { font-size: 32px; }
+  .form-grid { grid-template-columns: 1fr; }
+}

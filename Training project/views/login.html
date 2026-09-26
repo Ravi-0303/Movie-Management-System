@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - MovieHub</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/layout.css">
+</head>
+<body class="login-page">
+  <main class="login-wrapper">
+    <section class="login-card">
+      <div class="login-logo">🎬</div>
+      <p class="eyebrow">MOVIE MANAGEMENT SYSTEM</p>
+      <h1>Welcome to MovieHub</h1>
+      <p class="login-subtitle">Login with username to manage your movie collection.</p>
+      <form id="loginForm">
+        <label>Username
+          <input id="username" type="text" autocomplete="username" required placeholder="Enter username">
+        </label>
+        <label>Password
+          <input id="password" type="password" autocomplete="current-password" required placeholder="Enter password">
+        </label>
+
+        <p id="loginError" class="login-error hidden"></p>
+
+        <button type="submit" class="primary login-button">Login</button>
+      </form>
+
+      <p class="register-link">New user? <a href="register.html">Create a new account</a></p>
+    </section>
+  </main>
+
+  <script src="../js/service/apiConfig.js"></script>
+  <script src="../js/exception/apiException.js"></script>
+  <script src="../js/exception/validationException.js"></script>
+  <script src="../js/service/authService.js"></script>
+  <script src="../js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Details - MovieHub</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/layout.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand">🎬 MovieHub</div>
+    <nav><a href="index.html">← Back to Movies</a><span id="welcomeUser" class="welcome-user"></span><button id="logoutBtn" class="nav-logout">Logout</button></nav>
+  </header>
+
+  <main class="container details-page">
+    <div id="details"></div>
+  </main>
+
+  <script src="../js/service/apiConfig.js"></script>
+  <script src="../js/service/movieService.js"></script>
+  <script src="../js/exception/apiException.js"></script>
+  <script src="../js/service/authService.js"></script>
+  <script src="../js/utils.js"></script>
+  <script>
+    if (!AuthService.requireLogin()) {
+      // Redirecting to login.
+    } else {
+      const currentUser = AuthService.getCurrentUser();
+      document.getElementById("welcomeUser").textContent =
+        `Hi, ${currentUser.name || currentUser.username}`;
+      document.getElementById("logoutBtn").addEventListener("click", () => AuthService.logout());
+    }
+
+    (async function () {
+      const id = new URLSearchParams(location.search).get("id");
+      const target = document.getElementById("details");
+      if (!id) {
+        target.innerHTML = '<div class="empty">Movie ID was not provided.</div>';
+        return;
+      }
+      try {
+        const movie = await MovieService.getById(id);
+        if (!movie) throw new ApiException("Movie not found.");
+        target.innerHTML = `
+          <article class="detail-card">
+            <img class="detail-poster" src="${escapeHtml(movie.poster)}" alt="${escapeHtml(movie.title)} poster"
+                 onerror="this.src='https://placehold.co/500x750?text=No+Poster'">
+            <div class="detail-content">
+              <span class="pill">${escapeHtml(movie.genre)}</span>
+              <h1>${escapeHtml(movie.title)}</h1>
+              <div class="rating">⭐ ${Number(movie.rating).toFixed(1)} / 10</div>
+              <p class="muted">${movie.releaseYear} • ${escapeHtml(movie.language)} • ${movie.duration} min</p>
+              <p>${escapeHtml(movie.description || "No description available.")}</p>
+              <button class="primary" onclick="toggleFavourite('${movie.id}')">
+                ${movie.favorite ? "★ Remove Favourite" : "☆ Mark as Favourite"}
+              </button>
+            </div>
+          </article>`;
+      } catch (error) {
+        target.innerHTML = `<div class="empty">${escapeHtml(error.message)}</div>`;
+      }
+    })();
+
+    async function toggleFavourite(id) {
+      const movie = await MovieService.getById(id);
+      await MovieService.update(id, { ...movie, favorite: !movie.favorite });
+      location.reload();
+    }
+  </script>
+</body>
+</html>

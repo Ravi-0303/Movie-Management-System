@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - MovieHub</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/layout.css">
+</head>
+<body class="login-page">
+  <main class="login-wrapper">
+    <section class="login-card">
+      <div class="login-logo">🎬</div>
+      <p class="eyebrow">MOVIE MANAGEMENT SYSTEM</p>
+      <h1>Create Account</h1>
+      <p class="login-subtitle">Create your own unique username and password.</p>
+
+      <form id="registerForm">
+        <label>Full Name
+          <input id="name" type="text" required placeholder="Enter your name">
+        </label>
+
+        <label>Username
+          <input id="username" type="text" required minlength="3" placeholder="Choose a username">
+        </label>
+
+        <label>Password
+          <input id="password" type="password" required minlength="4" placeholder="Choose a password">
+        </label>
+
+        <label>Confirm Password
+          <input id="confirmPassword" type="password" required minlength="4" placeholder="Re-enter password">
+        </label>
+
+        <p id="registerError" class="login-error hidden"></p>
+        <button type="submit" class="primary login-button">Create Account</button>
+      </form>
+
+      <p class="register-link">Already have an account? <a href="login.html">Login</a></p>
+    </section>
+  </main>
+
+  <script src="../js/service/apiConfig.js"></script>
+  <script src="../js/exception/apiException.js"></script>
+  <script src="../js/exception/validationException.js"></script>
+  <script src="../js/service/authService.js"></script>
+  <script src="../js/register.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MovieHub - Movie Management System</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/layout.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand">🎬 MovieHub</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="details.html">Movie Details</a>
+      <span id="welcomeUser" class="welcome-user"></span>
+      <button id="logoutBtn" class="nav-logout">Logout</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">MOVIE MANAGEMENT SYSTEM</p>
+        <h1>Discover, manage and save your favourite movies.</h1>
+        <p>Search movies, filter by genre, sort by rating, and manage your movie collection.</p>
+      </div>
+      <div class="hero-icon">🍿</div>
+    </section>
+
+    <section class="toolbar">
+      <input id="searchInput" type="search" placeholder="Search by movie title or language...">
+      <select id="genreFilter">
+        <option value="">All Genres</option>
+      </select>
+      <select id="sortSelect">
+        <option value="default">Sort: Default</option>
+        <option value="rating-desc">Rating: High to Low</option>
+        <option value="rating-asc">Rating: Low to High</option>
+        <option value="year-desc">Newest First</option>
+        <option value="year-asc">Oldest First</option>
+      </select>
+      <button id="favouritesBtn" class="secondary">⭐ Favourites</button>
+      <button id="addMovieBtn" class="primary">+ Add Movie</button>
+    </section>
+
+    <section class="stats" id="stats"></section>
+
+    <section id="movieGrid" class="movie-grid"></section>
+    <p id="emptyState" class="empty hidden">No movies found. Try another search or add a movie.</p>
+  </main>
+
+  <div id="movieModal" class="modal hidden">
+    <div class="modal-card">
+      <button class="close" id="closeModal">×</button>
+      <h2 id="modalTitle">Add Movie</h2>
+      <form id="movieForm">
+        <input type="hidden" id="movieId">
+        <div class="form-grid">
+          <label>Title<input id="title" required></label>
+          <label>Genre<input id="genre" required placeholder="Sci-Fi"></label>
+          <label>Language<input id="language" required placeholder="English"></label>
+          <label>Release Year<input id="releaseYear" type="number" min="1900" max="2100" required></label>
+          <label>Rating<input id="rating" type="number" min="0" max="10" step="0.1" required></label>
+          <label>Duration (min)<input id="duration" type="number" min="1" required></label>
+        </div>
+        <label>Description<textarea id="description" rows="4"></textarea></label>
+        <label>Poster URL<input id="poster" placeholder="https://..."></label>
+        <div class="form-actions">
+          <button type="button" id="cancelBtn" class="secondary">Cancel</button>
+          <button type="submit" class="primary">Save Movie</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/service/apiConfig.js"></script>
+  <script src="../js/service/movieService.js"></script>
+  <script src="../js/exception/apiException.js"></script>
+  <script src="../js/exception/validationException.js"></script>
+  <script src="../js/service/authService.js"></script>
+  <script src="../js/utils.js"></script>
+  <script>
+    if (!AuthService.requireLogin()) {
+      // Redirecting to login.
+    } else {
+      const currentUser = AuthService.getCurrentUser();
+      document.getElementById("welcomeUser").textContent =
+        `Hi, ${currentUser.name || currentUser.username}`;
+      document.getElementById("logoutBtn").addEventListener("click", () => AuthService.logout());
+    }
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
